@@ -1,0 +1,72 @@
+
+body {
+	background-color: gray;
+	color: ;
+	background-image: url("mj.jpg")
+
+}
+
+
+html {
+	min-height: 100%;
+}
+
+h1{
+	color: white;
+	font-family: 'Anton', sans-serif;
+	text-align: center;
+	font-size: 40px;
+
+}
+
+p{
+	color: white;
+	font-family: 'Anton', sans-serif;
+	text-align: center;
+	font-size: 25px;
+}
+
+
+.container {
+	opacity: 1;
+}
+
+button {
+    margin: 10px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-color: #ffef97;
+	border-radius: 5px;
+	font-family: 'Anton', sans-serif;
+}
+
+
+
+label {
+	font-size: 25px;
+	font-weight: bolder;
+	font-family: 'Anton', sans-serif;
+	color: white;
+}
+
+#add-gif {
+	padding: 5px 10px 10px 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	background-color: red;
+	color: white;
+	font-family: 'Anton', sans-serif;
+}
+
+.playerpics {
+	margin-left: 10px;
+	float: left;
+}
+
+

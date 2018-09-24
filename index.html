@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Giphy App</title>
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+<!--CSS Link-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    
+</head>
+
+<body>
+
+<div class=container>
+        <h1>Giphy Search</h1>
+        <p class = "lead"> Enter your favorite player's name into the gif generator and click submit to create a button to see the player in action!</p>
+    </div>
+
+<!--New Buttons Appear on the Screan-->
+    
+        <div id="new-buttons"></div>
+
+<!--Form to add a new giph-->
+        <form id="giphy-form">
+            <label for="giphy-input">Gif Button Generator: </label>
+            <input type="text" id="giphy-input"><br>
+
+<!--Button to ad a gif-->
+            
+            <input id="add-gif"  type="submit" value="Submit">
+            </div>
+        </form>
+
+<!--Player gifs go here-->
+            
+            <div id="playerView"></div>
+            
+            </div>
+
+
+        <script
+        src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+        <script type="text/javascript">
+
+$(document).ready(function(){ 
+//Initial Display of Player Buttons 
+var players = ["Lebron James", "Micheal Jordan", "Chris Paul", "James Harden"];
+
+//Function Display Gifs 
+function displayGifs() {
+
+var player = $(this).attr("data-name");
+var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=R6jxV6eJ8NZSelZaKJpnOk4FFUyqkmig&q=" + player + "&limit=10"
+
+//Creation of AJAX call for specific player
+$.ajax({
+    url: queryURL,
+    method: "GET"
+})
+.then(function(response){
+
+var results = response.data;
+
+//Ratings data 
+
+// console.log(response);
+// console.log(response.data);
+// console.log(results);
+
+
+// Results for gifs
+for(var i=0; i < results.length; i++){
+console.log(results[0]);
+   
+
+//Creates a new div for player images
+var playerDiv = $("<div class='item'>");
+
+playerDiv.addClass("playerpics");
+
+//Rating Display 
+var rating = results[i].rating;
+var p = $("<p>").text("Rating: " + rating);
+
+//Rendering of "paused" gifs to animated gifs
+var playerImage = $("<img>");
+            playerImage.attr("src", results[i].images.fixed_height_still.url);
+            playerImage.attr("data-still", results[i].images.fixed_height_still.url);
+            playerImage.attr("data-animate", results[i].images.fixed_height.url);
+            playerImage.attr("data-state", "still");
+            playerImage.addClass('playerImage');
+
+//Display the rating 
+playerDiv.prepend(p);
+
+//Dispay the player's image
+playerDiv.prepend(playerImage)
+$("#playerView").prepend(playerDiv);
+
+}
+
+ $(".playerImage").on("click", function() {
+            var state = $(this).attr("data-state");
+            console.log(state);
+
+            if (state === "still") {
+              $(this).attr("src", $(this).attr("data-animate"));
+              $(this).attr("data-state", "animate");
+            } else {
+              $(this).attr("src", $(this).attr("data-still"));
+              $(this).attr("data-state", "still");
+            }
+        }); 
+    });   
+ }
+
+function renderButtons() {
+
+$("#new-buttons").empty();
+$("playerImage").empty();
+
+for (var i=0; i < players.length; i++) {
+
+        var a = $("<button>");
+        a.addClass("player");
+        a.attr("data-name", players[i]);
+        a.text(players[i]);
+        $("#new-buttons").append(a);
+    }
+}
+
+
+
+//On click add a gif
+$("#add-gif").on("click", function(event) {
+    event.preventDefault();
+
+//Grab input from the box
+var player = $("#giphy-input").val().trim();
+
+//Push the player from the input box to the button area 
+players.push(player);
+
+//Calls to render buttons
+renderButtons();
+});
+
+$(document).on("click", ".player", displayGifs);
+
+//Display original buttons on the screan 
+renderButtons();
+}); 
+
+        </script>
+    </div>
+</body>
+</html>
